@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hzero.train.todoservice.infra.mapper.TaskMapper">
+
+    <select id="selectTask" resultType="org.hzero.train.todoservice.domain.entity.Task">
+        select
+        tt.id,
+        tt.employee_id,
+        tt.state,
+        tt.task_number,
+        tt.task_description,
+        tt.tenant_id,
+        tt.object_version_number,
+        tu.employee_name,
+        tu.employee_number
+        from todo_task tt join todo_user tu on tt.employee_id = tu.id
+        <where>
+            <if test="taskNumber != null and taskNumber != ''">
+                and tt.task_number = #{taskNumber}
+            </if>
+            <if test="taskDescription != null and taskDescription != ''">
+                <bind name="taskDescriptionLike" value="'%' + taskDescription + '%'"/>
+                and tt.task_description like #{taskDescriptionLike}
+            </if>
+        </where>
+    </select>
+
+</mapper>

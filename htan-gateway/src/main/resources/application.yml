@@ -1,0 +1,196 @@
+spring:
+  application:
+    name: hzero-gateway
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://db.hzero.org:3306/hzero_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false}
+    username: ${SPRING_DATASOURCE_USERNAME:hzero}
+    password: ${SPRING_DATASOURCE_PASSWORD:hzero}
+  cache:
+    multi:
+      l1:
+        enabled: false # 是否开启一级缓存
+        type: caffeine # 一级缓存实现。目前支持caffeine和guava
+      l2:
+        enabled: false # 是否开启二级缓存
+        type: redis # 二级缓存的实现
+      caches:
+        permission: # 请求对应的权限缓存
+          l1-spec: initialCapacity=50,maximumSize=500,expireAfterWrite=300s
+          l2-spec: expiration=300
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  redis:
+    host: ${SPRING_REDIS_HOST:redis.hzero.org}
+    port: ${SPRING_REDIS_PORT:6379}
+    database: ${SPRING_REDIS_DATABASE:4}
+    jedis:
+      pool:
+        # 资源池中最大连接数
+        # 默认8，-1表示无限制；可根据服务并发redis情况及服务端的支持上限调整
+        max-active: ${SPRING_REDIS_POOL_MAX_ACTIVE:50}
+        # 资源池运行最大空闲的连接数
+        # 默认8，-1表示无限制；可根据服务并发redis情况及服务端的支持上限调整，一般建议和max-active保持一致，避免资源伸缩带来的开销
+        max-idle: ${SPRING_REDIS_POOL_MAX_IDLE:50}
+        # 当资源池连接用尽后，调用者的最大等待时间(单位为毫秒)
+        # 默认 -1 表示永不超时，设置5秒
+        max-wait: ${SPRING_REDIS_POOL_MAX_WAIT:5000}
+
+zuul:
+  addHostHeader: true
+  routes:
+    hiam:
+      path: /iam/**
+      serviceId: hzero-iam
+    hoth:
+      path: /oauth/**
+      serviceId: hzero-oauth
+      stripPrefix: false
+      sensitiveHeaders: none
+    hcnf:
+      path: /hcnf/**
+      serviceId: hzero-config
+    hwgr:
+      path: /swagger/**
+      serviceId: hzero-swagger
+    hagd:
+      path: /hagd/**
+      serviceId: hzero-asgard
+    hsgp:
+      path: /hsgp/**
+      serviceId: hzero-governance
+    hpfm:
+      path: /hpfm/**
+      serviceId: hzero-platform
+    hfle:
+      path: /hfle/**
+      serviceId: hzero-file
+    hmsg:
+      path: /hmsg/**
+      serviceId: hzero-message
+    hsdr:
+      path: /hsdr/**
+      serviceId: hzero-scheduler
+    himp:
+      path: /himp/**
+      serviceId: hzero-import
+    hitf:
+      path: /hitf/**
+      serviceId: hzero-interface
+    hwfl:
+      path: /hwfl/**
+      serviceId: hzero-workflow
+    hwfe:
+      path: /hwfe/editor/**
+      serviceId: hzero-workflow-editor
+    hdtt:
+      path: /hdtt/**
+      serviceId: hzero-transfer
+    hdtw:
+      path: /hdtw/**
+      serviceId: hzero-dw
+    hptl:
+      path: /hptl/**
+      serviceId: hzero-portal
+    hrpt:
+      path: /hrpt/**
+      serviceId: hzero-report
+    hwfp:
+      path: /hwfp/**
+      serviceId: hzero-workflow-plus
+    todo:
+      path: /todo/**
+      serviceId: hzero-todo-service
+  semaphore:
+    max-semaphores: 300
+  sensitiveHeaders: Cookie,Set-Cookie
+  host:
+    connect-timeout-millis: ${ZUUL_HOST_CONNECT_TIMEOUT_MILLIS:300000}
+    socket-timeout-millis: ${ZUUL_HOST_SOCKET_TIMEOUT_MILLIS:300000}
+
+server:
+  undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接
+    # 默认值为8，建议设置每个CPU核心一个线程
+    io-threads: ${SERVER_UNDERTOW_IO_THREADS:4}
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程
+    # 默认等于 io-threads*8，它的值设置取决于系统的负载，可适当调大该值
+    worker-threads: ${SERVER_UNDERTOW_WORKER_THREADS:128}
+    # 每块buffer的空间大小，越小空间被利用越充分
+    # 不要设置太大，以免影响其他应用，合适即可
+    buffer-size: ${SERVER_UNDERTOW_BUFFER_SIZE:1024}
+    # 是否分配的直接内存(NIO直接分配的堆外内存)
+    # 默认false
+    direct-buffers: true
+    # HTTP POST请求最大的大小
+    # 默认0，无限制，可设置10M
+    max-http-post-size: 10485760
+
+mybatis:
+  mapperLocations: classpath*:/mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+feign:
+  hystrix:
+    enabled: false
+
+ribbon:
+  ReadTimeout: ${RIBBON_READ_TIMEOUT:30000}
+  ConnectTimeout: ${RIBBON_CONNECT_TIMEOUT:6000}
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+hystrix:
+  stream:
+    queue:
+      enabled: true
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: ${HYSTRIX_COMMAND_TIMEOUT_IN_MILLISECONDS:90000}
+  shareSecurityContext: true # added by mingwei.liu@hand-china.com for share the token
+
+hzero:
+  gateway:
+      helper:
+        enabled: true
+        jwt-key: choerodon # jwt的密钥
+        # 是否打印 JWT
+        enabled-jwt-log: ${CHOERODON_GATEWAY_HELPER_ENABLE_JWT_LOG:false}
+        allowed:
+          origin: '*'
+        helper-skip-paths:
+          - /oauth/**
+          - /swagger/swagger-ui.html
+          - /swagger/swagger-resources/**
+          - /swagger/webjars/**
+          - /swagger/docs/**
+          - /hwfe/**
+          - /hwfp/editor-app/**
+          - /hwfp/lib/**
+          - /hwfp/activiti-editor
+          - /hwfp-*/editor-app/**
+          - /hwfp-*/lib/**
+          - /hwfp-*/activiti-editor
+          - /hmsg/sock-js/**
+        permission:
+          enabled: true # 是否开启权限校验
+          skip-paths: /swagger/docs/**, /**/skip/**, /oauth/**, /prometheus, /actuator/prometheus, /actuator/health, /actuator/env, /actuator/metrics, /favicon.ico # 跳过权限校验路径
+          cache-seconds: 600 # 请求地址和对应的权限缓存时间
+          cache-size: 3000  # 请求地址和对应的权限缓存大小
+        oauth-info-uri: ${SECURITY_OAUTH2_USER_INFO_URI:http://hzero-oauth/oauth/api/user} # oauth获取userDetail地址
+
+logging:
+  level:
+    io.choerodon: ${LOG_LEVEL:debug}
+    org.hzero: ${LOG_LEVEL:debug}
+    org.springframework.web: ${LOG_LEVEL:debug}
+    org.springframework.cloud: ${LOG_LEVEL:debug}

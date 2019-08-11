@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/htam-swagger" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/htan-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/htan-eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/htan-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/htan-iam" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/htan-ouath" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hzero-todo-service" charset="UTF-8" />
+  </component>
+</project>

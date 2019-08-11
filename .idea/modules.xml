@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/htam-swagger/htam-swagger.iml" filepath="$PROJECT_DIR$/htam-swagger/htam-swagger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htan-config/htan-config.iml" filepath="$PROJECT_DIR$/htan-config/htan-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htan-eureka/htan-eureka.iml" filepath="$PROJECT_DIR$/htan-eureka/htan-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htan-gateway/htan-gateway.iml" filepath="$PROJECT_DIR$/htan-gateway/htan-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htan-iam/htan-iam.iml" filepath="$PROJECT_DIR$/htan-iam/htan-iam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/htan-ouath/htan-ouath.iml" filepath="$PROJECT_DIR$/htan-ouath/htan-ouath.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hzero-demo.iml" filepath="$PROJECT_DIR$/.idea/hzero-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hzero-todo-service/hzero-todo-service.iml" filepath="$PROJECT_DIR$/hzero-todo-service/hzero-todo-service.iml" />
+    </modules>
+  </component>
+</project>

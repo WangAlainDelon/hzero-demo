@@ -1,0 +1,23 @@
+server:
+  port: 8050
+management:
+  server:
+    port: 8051
+
+eureka:
+  instance:
+    preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 10
+    metadata-map:
+      VERSION: 0.10.0
+      NODE_GROUP_ID: ${HZERO_NODE_GROUP_ID:0}
+      PRODUCT_CODE: ${HZERO_PRODUCT_CODE:DEFAULT}
+      PRODUCT_VERSION_CODE: ${HZERO_PRODUCT_VERSION_CODE:DEFAULT}
+      PRODUCT_ENV_CODE: ${HZERO_PRODUCT_ENV_CODE:DEFAULT}
+      SERVICE_VERSION_CODE: ${HZERO_SERVICE_VERSION_CODE:DEFAULT}
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://dev.hzero.org:8000/eureka}
+    registryFetchIntervalSeconds: 10
+    disable-delta: true

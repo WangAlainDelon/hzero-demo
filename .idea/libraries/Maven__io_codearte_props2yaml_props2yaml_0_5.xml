@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.codearte.props2yaml:props2yaml:0.5">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/codearte/props2yaml/props2yaml/0.5/props2yaml-0.5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/io/codearte/props2yaml/props2yaml/0.5/props2yaml-0.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/codearte/props2yaml/props2yaml/0.5/props2yaml-0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
