@@ -3,6 +3,7 @@ package org.hzero.train.todoservice.domain.entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,7 +14,6 @@ import org.hibernate.validator.constraints.Length;
 import io.choerodon.mybatis.annotation.ModifyAudit;
 import io.choerodon.mybatis.annotation.VersionAudit;
 import io.choerodon.mybatis.domain.AuditDomain;
-import org.springframework.data.annotation.Transient;
 
 import java.util.UUID;
 
